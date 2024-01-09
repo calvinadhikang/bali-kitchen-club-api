@@ -1,3 +1,3 @@
-export interface CreateCategoryDto {
+export class CreateCategoryDto {
     name: string;
 }
