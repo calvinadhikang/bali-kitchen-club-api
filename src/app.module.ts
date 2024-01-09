@@ -1,3 +1,4 @@
+import { Menu } from './menu/entities/menu.entity';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -13,7 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'root',
       password: '',
       database: 'bkc',
-      entities: [],
+      entities: [Menu],
       synchronize: true,
     }),
     MenuModule],

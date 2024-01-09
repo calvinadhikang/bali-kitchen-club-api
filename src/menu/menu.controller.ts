@@ -18,17 +18,22 @@ export class MenuController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.menuService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.menuService.findOneById(id);
+  }
+
+  @Get('/category/:category')
+  findById(@Param('category') category: string) {
+    return this.menuService.findAllByCategory(category);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
-    return this.menuService.update(+id, updateMenuDto);
+  update(@Param('id') id: number, @Body() updateMenuDto: UpdateMenuDto) {
+    return this.menuService.update(id, updateMenuDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.menuService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.menuService.remove(id);
   }
 }
