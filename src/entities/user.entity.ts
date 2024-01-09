@@ -1,6 +1,11 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { HeaderTransaction } from "./header-transaction.entity";
 
+enum UserRole {
+    STAFF = 'Staff',
+    OWNER = 'Owner'
+}
+
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
@@ -14,6 +19,13 @@ export class User {
 
     @Column()
     password: string;
+
+    @Column({
+        type: 'enum',
+        enum: UserRole,
+        default: UserRole.STAFF
+    })
+    role: string;
 
     @OneToMany(() => HeaderTransaction, header => header.employee)
     transactions: HeaderTransaction[];
