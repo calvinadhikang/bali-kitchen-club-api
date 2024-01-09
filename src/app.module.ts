@@ -12,6 +12,8 @@ import { UserModule } from './user/user.module';
 import { HeaderTransaction } from './entities/header-transaction.entity';
 import { DetailTransaction } from './entities/detail-transaction.entity';
 import { User } from './entities/user.entity';
+import { SesiModule } from './sesi/sesi.module';
+import { Sesi } from './entities/sesi.entity';
 
 @Module({
   imports: [
@@ -22,14 +24,15 @@ import { User } from './entities/user.entity';
       username: 'root',
       password: '',
       database: 'bkc',
-      entities: [Menu, Category, HeaderTransaction, DetailTransaction, User],
+      entities: [Menu, Category, HeaderTransaction, DetailTransaction, User, Sesi],
       synchronize: true,
     }),
     MenuModule,
     CategoryModule,
     HeadertransactionModule,
     DetailtransactionModule,
-    UserModule],
+    UserModule,
+    SesiModule],
   controllers: [AppController],
   providers: [AppService],
 })
