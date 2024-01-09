@@ -4,6 +4,7 @@ import { Category } from 'src/entities/category.entity';
 import { Repository } from 'typeorm';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Injectable()
 export class CategoryService {
@@ -14,6 +15,10 @@ export class CategoryService {
 
     async findAll(){
         return await this.categoryRepository.find();
+    }
+
+    async findById(name: string){
+        return await this.categoryRepository.findOneBy({name: name});
     }
 
     async create(createCategoryDto: CreateCategoryDto){

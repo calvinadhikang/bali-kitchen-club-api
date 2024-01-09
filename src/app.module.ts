@@ -6,6 +6,12 @@ import { MenuModule } from './menu/menu.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './category/category.module';
 import { Category } from './entities/category.entity';
+import { HeadertransactionModule } from './headertransaction/headertransaction.module';
+import { DetailtransactionModule } from './detailtransaction/detailtransaction.module';
+import { UserModule } from './user/user.module';
+import { HeaderTransaction } from './entities/header-transaction.entity';
+import { DetailTransaction } from './entities/detail-transaction.entity';
+import { User } from './entities/user.entity';
 
 @Module({
   imports: [
@@ -16,11 +22,14 @@ import { Category } from './entities/category.entity';
       username: 'root',
       password: '',
       database: 'bkc',
-      entities: [Menu, Category],
+      entities: [Menu, Category, HeaderTransaction, DetailTransaction, User],
       synchronize: true,
     }),
     MenuModule,
-    CategoryModule],
+    CategoryModule,
+    HeadertransactionModule,
+    DetailtransactionModule,
+    UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

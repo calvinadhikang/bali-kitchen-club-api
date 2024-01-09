@@ -4,13 +4,14 @@ import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Category } from 'src/entities/category.entity';
 
 @Injectable()
 export class MenuService {
 
   constructor(
     @InjectRepository(Menu)
-    private menuRepository: Repository<Menu>
+    private menuRepository: Repository<Menu>,
   ) {}
 
   async create(createMenuDto: CreateMenuDto) {
