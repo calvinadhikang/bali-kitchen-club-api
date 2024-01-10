@@ -14,6 +14,7 @@ import { DetailTransaction } from './entities/detail-transaction.entity';
 import { User } from './entities/user.entity';
 import { SesiModule } from './sesi/sesi.module';
 import { Sesi } from './entities/sesi.entity';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -32,7 +33,8 @@ import { Sesi } from './entities/sesi.entity';
     HeadertransactionModule,
     DetailtransactionModule,
     UserModule,
-    SesiModule],
+    SesiModule,
+    TransactionModule],
   controllers: [AppController],
   providers: [AppService],
 })
