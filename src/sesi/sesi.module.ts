@@ -7,6 +7,7 @@ import { Sesi } from 'src/entities/sesi.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Sesi])],
   controllers: [SesiController],
-  providers: [SesiService]
+  providers: [SesiService],
+  exports: [SesiService]
 })
 export class SesiModule {}

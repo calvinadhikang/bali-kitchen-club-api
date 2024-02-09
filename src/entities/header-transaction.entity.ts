@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, NumericType, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, NumericType, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { DetailTransaction } from "./detail-transaction.entity";
 import { User } from "./user.entity";
 import { Sesi } from "./sesi.entity";
@@ -11,11 +11,8 @@ export class HeaderTransaction {
     @Column()
     customer: string;
 
-    @OneToOne(() => User, user => user.id)
-    employee: User;
-
-    @OneToOne(() => Sesi, sesi => sesi.id)
-    sesi: Sesi;
+    @Column()
+    employee: number;
 
     @Column()
     tax: number;
@@ -25,9 +22,12 @@ export class HeaderTransaction {
     
     @Column()
     total: number;
-
+    
     @Column()
     grand_total: number;
+    
+    @Column()
+    sesi: number;
 
     @CreateDateColumn({default: () => 'CURRENT_TIMESTAMP'})
     createdAt: Date;

@@ -1,3 +1,4 @@
+import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 
@@ -16,7 +17,7 @@ export class TransactionController {
     }
 
     @Post()
-    create(@Body() data: any){
-
+    create(@Body() createTransactionDto: CreateTransactionDto){
+        return this.transactionService.create(createTransactionDto)
     }
 }

@@ -12,6 +12,11 @@ export class SesiController {
         return this.sesiService.findAll()
     }
 
+    @Get('now')
+    getNow(){
+        return this.sesiService.getSesiNow()
+    }
+
     @Get(':id')
     getById(@Param('id') id: number){
         return this.sesiService.findById(id);

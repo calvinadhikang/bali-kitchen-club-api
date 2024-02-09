@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { SesiService } from './../sesi/sesi.service';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DetailTransaction } from 'src/entities/detail-transaction.entity';
 import { HeaderTransaction } from 'src/entities/header-transaction.entity';
@@ -26,7 +27,9 @@ export class TransactionService {
         private readonly userRepository: Repository<User>,
         
         @InjectRepository(Sesi)
-        private readonly sesiRepository: Repository<Sesi>
+        private readonly sesiRepository: Repository<Sesi>,
+
+        private readonly sesiService: SesiService
     ){}
 
     async findAll(){
@@ -35,7 +38,15 @@ export class TransactionService {
 
     async getDetail(header_id: number){
         try {
-            return await this.headerRepository.findOneByOrFail({id: header_id});
+            const header = await this.headerRepository.findOne({
+                where: {
+                    id: header_id    
+                },
+                relations: ['details']
+            });
+
+            const result = { ...header, employee: await this.userRepository.findOne({where: {id: header.employee}}) }
+            return result
         } catch (error) {
             throw new NotFoundException('Transaction not found')
         }
@@ -43,42 +54,20 @@ export class TransactionService {
 
     async create(createTransactionDto: CreateTransactionDto){
         try {
-            await this.headerRepository.manager.transaction(async manager => {
-                const currentTime = new Date();
-                const employee = await this.userRepository.findOneBy({id: createTransactionDto.employee_id});
-                const sesi = await this.sesiRepository.findOne({
-                    where: {
-                        start: LessThan(currentTime),
-                        end: MoreThan(currentTime)
-                    }
-                })
+            const header = await this.headerRepository.create(createTransactionDto)
+            const sesi = await this.sesiService.getSesiNow();
 
-                const listDetails = [];
-                createTransactionDto.details.forEach(async (element) => {
-                    const menu = await this.menuRepository.findOneBy({id: element.menu_id});
+            if (sesi == null) {
+                throw new BadRequestException("Tidak ada Sesi penjualan yang sesuai")
+            }
 
-                    const detail = await this.detailRepository.create({
-                        menu: menu,
-                        price: element.price,
-                        qty: element.qty,
-                        subtotal: element.subtotal
-                    })
-                });
+            header.sesi = sesi.id;
+            await this.headerRepository.save(header);
 
-                const header = this.headerRepository.create({
-                    customer: createTransactionDto.customer,
-                    total: createTransactionDto.total,
-                    grand_total: createTransactionDto.grand_total,
-                    tax: createTransactionDto.tax,
-                    tax_value: createTransactionDto.tax_value,
-                    employee: employee,
-                    sesi: sesi
-                })
-
-                await manager.save(header)   
-            })
+            return header;
         } catch (error) {
-            
+            console.log(error)
+            return error;
         }
     }
 }

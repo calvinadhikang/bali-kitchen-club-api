@@ -1,5 +1,5 @@
 export class CreateDetailsDto {
-    menu_id: number;
+    menu: number;
     price: number;
     qty: number;
     subtotal: number;

@@ -4,9 +4,13 @@ import { TransactionService } from './transaction.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HeaderTransaction } from 'src/entities/header-transaction.entity';
 import { DetailTransaction } from 'src/entities/detail-transaction.entity';
+import { Menu } from 'src/entities/menu.entity';
+import { User } from 'src/entities/user.entity';
+import { Sesi } from 'src/entities/sesi.entity';
+import { SesiModule } from 'src/sesi/sesi.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([HeaderTransaction, DetailTransaction])],
+  imports: [TypeOrmModule.forFeature([HeaderTransaction, DetailTransaction, Menu, User, Sesi]), SesiModule],
   controllers: [TransactionController],
   providers: [TransactionService]
 })

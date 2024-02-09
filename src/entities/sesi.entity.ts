@@ -10,8 +10,8 @@ export class Sesi {
     name: string;
 
     @Column()
-    start: Date;
+    start: string;
 
     @Column()
-    end: Date;
+    end: string;
 }

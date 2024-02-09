@@ -2,7 +2,7 @@ import { CreateDetailsDto } from "./create-details.dto";
 
 export class CreateTransactionDto {
     customer: string;
-    employee_id: number;
+    employee: number;
     tax: number;
     tax_value: number;
     total: number;

@@ -6,8 +6,6 @@ import { MenuModule } from './menu/menu.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './category/category.module';
 import { Category } from './entities/category.entity';
-import { HeadertransactionModule } from './headertransaction/headertransaction.module';
-import { DetailtransactionModule } from './detailtransaction/detailtransaction.module';
 import { UserModule } from './user/user.module';
 import { HeaderTransaction } from './entities/header-transaction.entity';
 import { DetailTransaction } from './entities/detail-transaction.entity';
@@ -30,8 +28,6 @@ import { TransactionModule } from './transaction/transaction.module';
     }),
     MenuModule,
     CategoryModule,
-    HeadertransactionModule,
-    DetailtransactionModule,
     UserModule,
     SesiModule,
     TransactionModule],
