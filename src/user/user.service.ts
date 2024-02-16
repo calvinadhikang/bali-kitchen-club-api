@@ -22,4 +22,8 @@ export class UserService {
             throw new NotFoundException('User not found');
         }
     }
+
+    async getStaffs(){
+        return this.userRepository.findBy({role: "Staffs"});
+    }
 }

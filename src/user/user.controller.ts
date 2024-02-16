@@ -17,4 +17,9 @@ export class UserController {
     login(@Body('username') username: string, @Body('password') password: string) {
         return this.userService.login(username, password);
     }
+
+    @Get('/staff')
+    getUsers(){
+        return this.userService.getStaffs();
+    }
 }
