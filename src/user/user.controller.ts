@@ -18,7 +18,7 @@ export class UserController {
         return this.userService.login(username, password);
     }
 
-    @Get('/staff')
+    @Get('/staffs')
     getUsers(){
         return this.userService.getStaffs();
     }
