@@ -24,6 +24,6 @@ export class UserService {
     }
 
     async getStaffs(){
-        return this.userRepository.findBy({role: "Staffs"});
+        return await this.userRepository.findBy({ role: "Staff" });
     }
 }

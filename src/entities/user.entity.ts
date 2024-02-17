@@ -26,7 +26,4 @@ export class User {
         default: UserRole.STAFF
     })
     role: string;
-
-    @OneToMany(() => HeaderTransaction, header => header.employee)
-    transactions: HeaderTransaction[];
 }
