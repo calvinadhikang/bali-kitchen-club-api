@@ -3,6 +3,11 @@ import { DetailTransaction } from "./detail-transaction.entity";
 import { User } from "./user.entity";
 import { Sesi } from "./sesi.entity";
 
+enum TransactionStatus {
+    PAID = 'Lunas',
+    UNPAID = 'Belum Lunas'
+}
+
 @Entity()
 export class HeaderTransaction {
     @PrimaryGeneratedColumn()
@@ -28,6 +33,13 @@ export class HeaderTransaction {
     
     @Column()
     sesi: number;
+
+    @Column({
+        type: 'enum',
+        enum: TransactionStatus,
+        default: TransactionStatus.UNPAID
+    })
+    status: string;
 
     @CreateDateColumn({default: () => 'CURRENT_TIMESTAMP'})
     createdAt: Date;

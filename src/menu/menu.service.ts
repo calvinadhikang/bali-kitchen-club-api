@@ -9,33 +9,47 @@ import { Category } from 'src/entities/category.entity';
 @Injectable()
 export class MenuService {
 
-  constructor(
-    @InjectRepository(Menu)
-    private menuRepository: Repository<Menu>,
-  ) {}
+    constructor(
+        @InjectRepository(Menu)
+        private menuRepository: Repository<Menu>,
+    ) {}
 
-  async create(createMenuDto: CreateMenuDto) {
-    return await this.menuRepository.save(createMenuDto);
-  }
+    async create(createMenuDto: CreateMenuDto) {
+        return await this.menuRepository.save(createMenuDto);
+    }
 
-  async findAll() {
-    return await this.menuRepository.find();
-  }
+    async findAll() {
+        return await this.menuRepository.find();
+    }
 
-  async findOneById(id: number) {
-    return await this.menuRepository.findOneBy({id: id});
-  }
+    async findOneById(id: number) {
+        return await this.menuRepository.findOneBy({id: id});
+    }
 
-  async findAllByCategory(category: string){
-    return await this.menuRepository.findBy({category: category});
-  }
+    async findAllByCategory(category: string){
+        if (category == "All") {
+            return await this.menuRepository.find();
+        }
+        return await this.menuRepository.findBy({category: category});
+    }
 
-  async update(id: number, updateMenuDto: UpdateMenuDto) {
-    await this.menuRepository.update(id, updateMenuDto)
-    return await this.menuRepository.findOneBy({id: id});
-  }
+    async update(id: number, updateMenuDto: UpdateMenuDto) {
+        await this.menuRepository.update(id, updateMenuDto)
+        return await this.menuRepository.findOneBy({id: id});
+    }
 
-  async remove(id: number) {
-    return await this.menuRepository.delete(id);
-  }
+    async remove(id: number) {
+        return await this.menuRepository.delete(id);
+    }
+
+    async getMenuTransaction(){
+        let result = await this.menuRepository.find();
+        let temp = []
+        result.forEach(element => {
+            const newObj = { ...element, qty: 0 }
+            temp.push(newObj)
+        });
+
+        return temp
+    }
 }

@@ -7,5 +7,6 @@ export class CreateTransactionDto {
     tax_value: number;
     total: number;
     grand_total: number;
+    status: string;
     details: CreateDetailsDto[];
 }
