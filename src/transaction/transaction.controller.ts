@@ -11,11 +11,7 @@ export class TransactionController {
 
     @Get()
     findAll(@Query('time') time: string = 'today', @Query('sesi') sesi: number = 0){
-        if (time == undefined || time == "") {
-            return this.transactionService.findAll();
-        }else{
-            return this.transactionService.findByTimeAndSesi(time, sesi)
-        }
+        return this.transactionService.findByTimeAndSesi(time, sesi)
     }
 
     @Get(':id')

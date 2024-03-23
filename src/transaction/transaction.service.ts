@@ -38,22 +38,20 @@ export class TransactionService {
     async findByTimeAndSesi(time:string, sesiId: number){
         const todayStart = new Date();
         todayStart.setHours(0, 0, 0, 0); // Set time to 00:01 AM
-
+        
         const todayEnd = new Date();
         todayEnd.setHours(23, 59, 59, 999); // Set time to 23:59:59 PM
-
+        
+        let transactionList = [];
         let sesi = sesiId
+
         if (sesiId <= 0) {
             let sesiNow = (await this.sesiService.getSesiNow())
-            if (sesiNow == null) {
-                return []
-            }else{
+            if (sesiNow != null) {
                 sesi = sesiNow.id
             }
         }
-        
 
-        let transactionList = [];
         if (time == 'today') {
             if (sesi) {
                 transactionList = await this.headerRepository.find({
