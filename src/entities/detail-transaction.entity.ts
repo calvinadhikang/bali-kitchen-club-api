@@ -21,4 +21,7 @@ export class DetailTransaction {
     
     @Column()
     subtotal: number;
+
+    @Column()
+    name: String;
 }

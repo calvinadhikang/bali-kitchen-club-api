@@ -41,7 +41,7 @@ export class HeaderTransaction {
     })
     status: string;
 
-    @CreateDateColumn({default: () => 'CURRENT_TIMESTAMP'})
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     createdAt: Date;
 
     @OneToMany(() => DetailTransaction, detail => detail.header, {cascade: true})

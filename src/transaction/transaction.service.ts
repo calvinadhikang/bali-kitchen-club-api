@@ -3,7 +3,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { DetailTransaction } from 'src/entities/detail-transaction.entity';
 import { HeaderTransaction } from 'src/entities/header-transaction.entity';
-import { EntityManager, LessThan, MoreThan, Repository, Transaction } from 'typeorm';
+import { Any, EntityManager, LessThan, MoreThan, Repository, Transaction } from 'typeorm';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { User } from 'src/entities/user.entity';
 import { createHash } from 'crypto';
@@ -45,10 +45,13 @@ export class TransactionService {
                 relations: ['details']
             });
 
-            const result = { ...header, employee: await this.userRepository.findOne({where: {id: header.employee}}) }
+            const result = { 
+                ...header, 
+                employee: await this.userRepository.findOne({where: {id: header.employee}}), 
+            }
             return result
         } catch (error) {
-            throw new NotFoundException('Transaction not found')
+            throw new NotFoundException('Transaction not found');
         }
     }
 

@@ -23,7 +23,7 @@ import { TransactionModule } from './transaction/transaction.module';
       username: 'root',
       password: '',
       database: 'bkc',
-      entities: [Menu, Category, HeaderTransaction, DetailTransaction, User, Sesi],
+      entities: [Menu, Category, User, Sesi, HeaderTransaction, DetailTransaction],
       synchronize: true,
     }),
     MenuModule,
