@@ -10,7 +10,7 @@ export class TransactionController {
     constructor(private readonly transactionService: TransactionService){}
 
     @Get()
-    findAll(@Query('time') time: string = 'today', @Query('sesi') sesi: string = 'now'){
+    findAll(@Query('time') time: string = 'today', @Query('sesi') sesi: number = 0){
         if (time == undefined || time == "") {
             return this.transactionService.findAll();
         }else{

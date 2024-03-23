@@ -35,33 +35,35 @@ export class TransactionService {
         return await this.headerRepository.find();
     }
 
-    async findByTimeAndSesi(time:string, sesiId: string){
+    async findByTimeAndSesi(time:string, sesiId: number){
         const todayStart = new Date();
         todayStart.setHours(0, 0, 0, 0); // Set time to 00:01 AM
 
         const todayEnd = new Date();
         todayEnd.setHours(23, 59, 59, 999); // Set time to 23:59:59 PM
 
-        let sesi: null | string | number = null;
-        if (sesiId == 'now') {
-            sesi = (await this.sesiService.getSesiNow()).id
-        }else{
-            sesi = parseInt(sesiId)
+        let sesi = sesiId
+        if (sesiId <= 0) {
+            let sesiNow = (await this.sesiService.getSesiNow())
+            if (sesiNow == null) {
+                return []
+            }else{
+                sesi = sesiNow.id
+            }
         }
-
-        console.log(time)
-        console.log(sesi)
         
+
+        let transactionList = [];
         if (time == 'today') {
             if (sesi) {
-                return await this.headerRepository.find({
+                transactionList = await this.headerRepository.find({
                     where: {
                         sesi: sesi,
                         createdAt: Between(todayStart, todayEnd) // createdAt is between todayStart and todayEnd
                     }
                 });
             }else{
-                return await this.headerRepository.find({
+                transactionList = await this.headerRepository.find({
                     where: {
                         createdAt: Between(todayStart, todayEnd) // createdAt is between todayStart and todayEnd
                     }
@@ -70,19 +72,34 @@ export class TransactionService {
         }
         else if(time == 'past') {
             if (sesi) {
-                return await this.headerRepository.find({
+                transactionList = await this.headerRepository.find({
                     where: {
                         sesi: sesi,
                         createdAt: LessThan(todayStart) // createdAt is between todayStart and todayEnd
                     }
                 });
             }else{
-                return await this.headerRepository.find({
+                transactionList = await this.headerRepository.find({
                     where: {
                         createdAt: LessThan(todayStart) // createdAt is between todayStart and todayEnd
                     }
                 });
             }
+        }
+
+        let grandTotal = 0
+        let totalEarnings = 0
+        transactionList.forEach((trans) => {
+            if (trans.status == "Lunas") {
+                totalEarnings += trans.grand_total
+            }
+            grandTotal += trans.grand_total
+        })
+
+        return {
+            data: transactionList,
+            total_earning: totalEarnings,
+            grand_total: grandTotal
         }
     }
 
@@ -118,6 +135,14 @@ export class TransactionService {
             header.sesi = sesi.id;
             await this.headerRepository.save(header);
 
+            for (const detail of header.details){
+                const menuToUpdate = await this.menuRepository.findOneBy({id: detail.menu})
+                const currentStock = menuToUpdate.stock
+
+                menuToUpdate.stock = currentStock - detail.qty
+                await this.menuRepository.save(menuToUpdate)
+            }
+
             return header;
         } catch (error) {
             console.log(error)
@@ -127,8 +152,8 @@ export class TransactionService {
 
     async setLunas(header_id: number){
         try {
-            await this.headerRepository.findOneByOrFail({id: 33})
-            await this.headerRepository.update(33, { status: "Lunas" })
+            await this.headerRepository.findOneByOrFail({id: header_id})
+            await this.headerRepository.update(header_id, { status: "Lunas" })
             return {
                 error: false,
                 message: "Berhasil Update Status"
