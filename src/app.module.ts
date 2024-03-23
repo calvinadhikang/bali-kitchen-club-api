@@ -24,7 +24,7 @@ import { TransactionModule } from './transaction/transaction.module';
       password: '',
       database: 'bkc',
       entities: [Menu, Category, User, Sesi, HeaderTransaction, DetailTransaction],
-      synchronize: true,
+      // synchronize: true,
     }),
     MenuModule,
     CategoryModule,
