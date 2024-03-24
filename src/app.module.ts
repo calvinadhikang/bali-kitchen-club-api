@@ -13,6 +13,8 @@ import { User } from './entities/user.entity';
 import { SesiModule } from './sesi/sesi.module';
 import { Sesi } from './entities/sesi.entity';
 import { TransactionModule } from './transaction/transaction.module';
+import { StockModule } from './stock/stock.module';
+import { StockMutation } from './entities/stock-mutation.entity';
 
 @Module({
   imports: [
@@ -20,20 +22,21 @@ import { TransactionModule } from './transaction/transaction.module';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      // synchronize: true,
-      // username: 'root',
-      // password: '',
-      // database: 'bkc',
-      entities: [Menu, Category, User, Sesi, HeaderTransaction, DetailTransaction],
-      username: 'nanaspos_bkc',
-      password: 'calvinadhikang02',
-      database: 'nanaspos_bkc',
+      synchronize: true,
+      username: 'root',
+      password: '',
+      database: 'bkc',
+      entities: [Menu, Category, User, Sesi, HeaderTransaction, DetailTransaction, StockMutation],
+      // username: 'nanaspos_bkc',
+      // password: 'calvinadhikang02',
+      // database: 'nanaspos_bkc',
     }),
     MenuModule,
     CategoryModule,
     UserModule,
     SesiModule,
-    TransactionModule],
+    TransactionModule,
+    StockModule],
   controllers: [AppController],
   providers: [AppService],
 })
