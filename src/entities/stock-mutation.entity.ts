@@ -1,11 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-enum MutationStatus {
+export enum MutationStatus {
     MASUK = 'Masuk',
     KELUAR = 'Keluar'
 }
 
-enum MutationType {
+export enum MutationType {
     INPUT = 'Input',
     TRANSAKSI = 'Transaksi',
     RUSAK = 'Rusak'

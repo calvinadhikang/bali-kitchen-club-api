@@ -8,6 +8,7 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { User } from 'src/entities/user.entity';
 import { Sesi } from 'src/entities/sesi.entity';
 import { Menu } from 'src/entities/menu.entity';
+import { MutationStatus, MutationType, StockMutation } from 'src/entities/stock-mutation.entity';
 
 @Injectable()
 export class TransactionService {
@@ -27,6 +28,9 @@ export class TransactionService {
         
         @InjectRepository(Sesi)
         private readonly sesiRepository: Repository<Sesi>,
+
+        @InjectRepository(StockMutation)
+        private readonly stockRepository: Repository<StockMutation>,
 
         private readonly sesiService: SesiService
     ){}
@@ -123,6 +127,7 @@ export class TransactionService {
 
     async create(createTransactionDto: CreateTransactionDto){
         let err = false
+        let msg = "Success"
         
         try {
             const header = await this.headerRepository.create(createTransactionDto)
@@ -141,14 +146,25 @@ export class TransactionService {
 
                 menuToUpdate.stock = currentStock - detail.qty
                 await this.menuRepository.save(menuToUpdate)
+
+                //create stock mutation
+                let stock = await this.stockRepository.create({
+                    menu: detail.menu,
+                    qty: detail.qty,
+                    reference: header.id,
+                    status: MutationStatus.KELUAR,
+                    type: MutationType.TRANSAKSI
+                })
+                await this.stockRepository.save(stock)
             }
         } catch (error) {
             err = true
+            msg = error
         }
 
         return {
             error: err,
-            message: "Success"
+            message: msg
         }
     }
 
