@@ -122,6 +122,8 @@ export class TransactionService {
     }
 
     async create(createTransactionDto: CreateTransactionDto){
+        let err = false
+        
         try {
             const header = await this.headerRepository.create(createTransactionDto)
             const sesi = await this.sesiService.getSesiNow();
@@ -140,11 +142,13 @@ export class TransactionService {
                 menuToUpdate.stock = currentStock - detail.qty
                 await this.menuRepository.save(menuToUpdate)
             }
-
-            return header;
         } catch (error) {
-            console.log(error)
-            return error;
+            err = true
+        }
+
+        return {
+            error: err,
+            message: "Success"
         }
     }
 

@@ -18,7 +18,7 @@ export class CategoryController {
         return this.categoryService.findById(name);
     }
 
-    @Post()
+    @Post('add')
     create(@Body() createCategoryDto: CreateCategoryDto){
         return this.categoryService.create(createCategoryDto);
     }

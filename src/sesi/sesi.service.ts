@@ -21,7 +21,17 @@ export class SesiService {
     }
     
     async create(createSesiDto: CreateSesiDto){
-        return await this.sesiRepository.save(createSesiDto);
+        let err = false
+        try {
+            await this.sesiRepository.save(createSesiDto);
+        } catch (error) {
+            err = true
+        }
+
+        return {
+            error: err,
+            message: "Success"
+        }
     }
 
     async delete(id: number){

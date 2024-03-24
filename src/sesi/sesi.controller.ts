@@ -22,7 +22,7 @@ export class SesiController {
         return this.sesiService.findById(id);
     }
 
-    @Post()
+    @Post('add')
     create(@Body() createSesiDto: CreateSesiDto){
         return this.sesiService.create(createSesiDto);
     }

@@ -19,7 +19,7 @@ export class TransactionController {
         return this.transactionService.getDetail(header_id);
     }
 
-    @Post()
+    @Post('add')
     create(@Body() createTransactionDto: CreateTransactionDto){
         return this.transactionService.create(createTransactionDto)
     }

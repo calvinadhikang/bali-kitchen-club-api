@@ -15,7 +15,17 @@ export class MenuService {
     ) {}
 
     async create(createMenuDto: CreateMenuDto) {
-        return await this.menuRepository.save(createMenuDto);
+        var err = false
+        try {
+            await this.menuRepository.save(createMenuDto);
+        } catch (error) {
+            err = true
+        }
+
+        return {
+            error: err,
+            message: "Success"
+        }
     }
 
     async findAll() {

@@ -22,7 +22,17 @@ export class CategoryService {
     }
 
     async create(createCategoryDto: CreateCategoryDto){
-        return await this.categoryRepository.save(createCategoryDto);
+        let err = false
+        try {
+            await this.categoryRepository.save(createCategoryDto);
+        } catch (error) {
+            err = true            
+        }
+
+        return {
+            error: err,
+            message: "Success"
+        }
     }
 
     async delete(id: number) {
