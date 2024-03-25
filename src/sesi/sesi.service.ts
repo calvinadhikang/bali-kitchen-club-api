@@ -55,11 +55,11 @@ export class SesiService {
 
         // Construct the query to find the session where the current time is within the start and end time range
         const sesi = await this.sesiRepository
-        .createQueryBuilder('sesi')
-        .where('sesi.start <= :currentTime', { currentTime: `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}` })
-        .andWhere('sesi.end >= :currentTime', { currentTime: `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}` })
-        .getOne();
+            .createQueryBuilder('sesi')
+            .where('sesi.start <= :currentTime', { currentTime: `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}` })
+            .andWhere('sesi.end >= :currentTime', { currentTime: `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}` })
+            .getOne();
 
-        return sesi || null;
+        return sesi || { id: null };
     }
 }   
