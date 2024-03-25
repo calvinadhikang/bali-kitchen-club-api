@@ -28,7 +28,7 @@ export class SesiController {
         return this.sesiService.create(createSesiDto);
     }
 
-    @Patch(':id')
+    @Patch('update/:id')
     update(@Param('id') id: number, @Body() updateSesiDto: UpdateSesiDto){
         return this.sesiService.update(id, updateSesiDto);
     }

@@ -30,6 +30,7 @@ import { StockMutation } from './entities/stock-mutation.entity';
       username: 'nanaspos_bkc',
       password: 'calvinadhikang02',
       database: 'nanaspos_bkc',
+      timezone: '+08:00'
     }),
     MenuModule,
     CategoryModule,
