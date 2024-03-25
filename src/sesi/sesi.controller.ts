@@ -29,7 +29,7 @@ export class SesiController {
     }
 
     @Patch(':id')
-    update(@Param('id') id: number, updateSesiDto: UpdateSesiDto){
+    update(@Param('id') id: number, @Body() updateSesiDto: UpdateSesiDto){
         return this.sesiService.update(id, updateSesiDto);
     }
 
