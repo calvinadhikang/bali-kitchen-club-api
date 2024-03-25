@@ -62,12 +62,18 @@ export class TransactionService {
                     where: {
                         sesi: sesi,
                         createdAt: Between(todayStart, todayEnd) // createdAt is between todayStart and todayEnd
+                    },
+                    order: {
+                        createdAt: 'DESC'
                     }
                 });
             }else{
                 transactionList = await this.headerRepository.find({
                     where: {
                         createdAt: Between(todayStart, todayEnd) // createdAt is between todayStart and todayEnd
+                    },
+                    order: {
+                        createdAt: 'DESC'
                     }
                 });
             }
@@ -78,12 +84,18 @@ export class TransactionService {
                     where: {
                         sesi: sesi,
                         createdAt: LessThan(todayStart) // createdAt is between todayStart and todayEnd
+                    },
+                    order: {
+                        createdAt: 'DESC'
                     }
                 });
             }else{
                 transactionList = await this.headerRepository.find({
                     where: {
                         createdAt: LessThan(todayStart) // createdAt is between todayStart and todayEnd
+                    },
+                    order: {
+                        createdAt: 'DESC'
                     }
                 });
             }

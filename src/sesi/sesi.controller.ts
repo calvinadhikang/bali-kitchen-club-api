@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { UpdateSesiDto } from './dto/update-sesi.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { SesiService } from './sesi.service';
 import { CreateSesiDto } from './dto/create-sesi.dto';
 
@@ -25,6 +26,11 @@ export class SesiController {
     @Post('add')
     create(@Body() createSesiDto: CreateSesiDto){
         return this.sesiService.create(createSesiDto);
+    }
+
+    @Patch(':id')
+    update(@Param('id') id: number, updateSesiDto: UpdateSesiDto){
+        return this.sesiService.update(id, updateSesiDto);
     }
 
     @Delete(':id')

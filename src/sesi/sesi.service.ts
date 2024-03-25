@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Sesi } from 'src/entities/sesi.entity';
 import { Repository } from 'typeorm';
 import { CreateSesiDto } from './dto/create-sesi.dto';
+import { UpdateSesiDto } from './dto/update-sesi.dto';
 
 @Injectable()
 export class SesiService {
@@ -36,6 +37,14 @@ export class SesiService {
 
     async delete(id: number){
         return await this.sesiRepository.delete(id);
+    }
+
+    async update(id: number, updateSesiDto: UpdateSesiDto){
+        await this.sesiRepository.update(id, updateSesiDto)
+        return {
+            error: false,
+            message: "Berhasil update"
+        }
     }
 
     async getSesiNow(){

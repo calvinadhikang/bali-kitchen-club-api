@@ -17,7 +17,14 @@ export class StockService {
     ){}
 
     async getByMenuId(id: number){
-        return await this.stockRepository.findBy({menu: id})
+        return await this.stockRepository.find({
+            where: {
+                menu: id
+            },
+            order: {
+                createdAt: 'DESC'
+            }
+        })
     }
 
     async addByMenuId(createStockDto: CreateStockDto){
